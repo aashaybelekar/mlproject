@@ -1,7 +1,8 @@
 pandas
 numpy
 seaborn
-sklearn
+scikit-learn
 dataclasses
 dill
+xgboost
 -e .

@@ -10,6 +10,9 @@ from src.logger import logging
 from src.components.data_transformation import DataTransormationConfig
 from src.components.data_transformation import DataTransormation
 
+from src.components.model_trainer import ModelTrainerConfig
+from src.components.model_trainer import ModelTrainer
+
 
 @dataclass
 class DataIngestionConfig:
@@ -55,4 +58,8 @@ if __name__ == '__main__':
     train_df, test_df, _ = obj.initiate_date_ingestion()
 
     data_transformation = DataTransormation()
-    data_transformation.initiate_date_transformation(train_df, test_df)
+
+    train_arr, test_arr,_ = data_transformation.initiate_date_transformation(train_df, test_df)
+
+    modeltrainer = ModelTrainer()
+    print(modeltrainer.initiate_model_trainer(train_arr, test_arr))
