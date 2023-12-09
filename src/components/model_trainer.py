@@ -114,4 +114,4 @@ class ModelTrainer:
 
             return auc
         except Exception as e:
-            CustomException(e, sys)
+            raise CustomException(e, sys)

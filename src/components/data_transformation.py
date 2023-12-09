@@ -35,10 +35,6 @@ class DataTransormation:
             ]
         self.target_column_name = "HeartDisease"
 
-        self.drop = [
-            'RestingECG',
-            'RestingBP'
-        ]
     
     def get_data_transformer_object(self):
         '''
@@ -86,9 +82,6 @@ class DataTransormation:
         try:
             train_df = pd.read_csv(train_path)
             test_df = pd.read_csv(test_path)
-
-            train_df = train_df.drop(columns=self.drop, axis=1)
-            test_df = test_df.drop(columns=self.drop, axis=1)
             
             logging.info("read train and test data completed")
 

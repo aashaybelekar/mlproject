@@ -28,6 +28,8 @@ class DataIngestion:
         logging.info("Entered the data ingestion method or component")
         try:
             df = pd.read_csv('notebook\data\heart.csv')
+            print(df.columns)
+            df = df.drop(['RestingBP','RestingECG'], axis=1)
             logging.info('Read the Dataset as DataFrame')
 
             os.makedirs(os.path.dirname(self.ingestion_config.train_data_path), exist_ok=True)

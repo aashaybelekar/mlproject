@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Disease Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        .login {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            text-align: left;
+        }
+
+        .mb-3 {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        select.form-control {
+            height: 40px;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #3498db;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+
+        h2 {
+            margin-top: 20px;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login">
+        <h1>Heart Disease Prediction</h1>
+        <form action="{{ url_for('predict_datapoint')}}" method="post">
+            <div class="mb-3">
+                <label>Age</label>
+                <input class="form-control" type="number" name="age" placeholder="Enter years" min='0' max='130' />
+            </div>
+            <div class="mb-3">
+                <label>Gender</label>
+                <select class="form-control" name="sex" required>
+                    <option selected disabled value="">Select your Gender</option>
+                    <option value="M">Male</option>
+                    <option value="F">Female</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label>Chest Pain Type</label>
+                <select class="form-control" name="chespaintype" required>
+                    <option selected disabled value="">Select type</option>
+                    <option value="ASY">Asymptomatic</option>
+                    <option value="NAP">Non-Anginal Pain</option>
+                    <option value="ATA">Atypical Angina</option>
+                    <option value="TA">Typical Angina</option>
+                </select>
+            </div>
+            
+            <div class="mb-3">
+                <label>Cholesterol</label>
+                <input class="form-control" type="number" name="cholesterol" placeholder="Enter your cholesterol [mm/dl]" />
+            </div>
+            
+            <div class="mb-3">
+                <label>Fasting Blood Sugar</label>
+                <select class="form-control" name="fastingbs" required>
+                    <option selected disabled value="">Select</option>
+                    <option value="1">Greater than 120</option>
+                    <option value="0">Normal</option>
+                </select>
+            </div>
+            
+            <div class="mb-3">
+                <label>Maximum Heart Rate Achieved</label>
+                <input class="form-control" type="number" name="maxhr" placeholder="Enter your Maximum Heart Rate Achieved" min='60' max='202' />
+            </div>
+            
+            <div class="mb-3">
+                <label>Did Exercise Induced Angina?</label>
+                <select class="form-control" name="exerciseangina" required>
+                    <option selected disabled value="">Select</option>
+                    <option value="Y">Yes</option>
+                    <option value="N">No</option>
+                </select>
+            </div>
+            
+            <div class="mb-3">
+                <label>Old Peak</label>
+                <input class="form-control" type="number" step="0.01" name="oldpeak" placeholder="Enter your old peak" />
+            </div>
+            
+            <div class="mb-3">
+                <label>Slope of ST segment</label>
+                <select class="form-control" name="st_segment_slope" required>
+                    <option selected disabled value="">Select</option>
+                    <option value="Up">Up</option>
+                    <option value="Flat">Flat</option>
+                    <option value="Down">Down</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <input class="btn btn-primary" type="submit" value="Predict your condition" required />
+            </div>
+        </form>
+        <h3>{{results}}</h3>
+    </div>
+</body>
+
+</html>
