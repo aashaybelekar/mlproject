@@ -6,7 +6,7 @@
 
 ## An Machine Learning project with hyperparameter tuning and Flask app creation
 
-This project is a machine learning project made to detect heart disease from a simple physical test, the data is from kaggel [Heart Disease Dataset](https://www.kaggle.com/datasets/fedesoriano/heart-failure-prediction). The reasearch done for this project is in [research folder](https://github.com/aashaybelekar/HeartDiseasePrediction/blob/main/research/heart-failure-ml-project.ipynb). it includes the following phases of machine learning project:
+This project is a machine learning project made to detect heart disease from a simple physical test, the data is from kaggel [Heart Disease Dataset](https://www.kaggle.com/datasets/fedesoriano/heart-failure-prediction). The reasearch done for this project is in [research folder](https://github.com/aashaybelekar/HeartDiseasePrediction/blob/main/research/heart-failure-ml-project.ipynb) or on [Kaggle](https://www.kaggle.com/code/aashaybelekar/heart-failure-ml-project). it includes the following phases of machine learning project:
 
 * Research Phase
 * Data Ingestion
