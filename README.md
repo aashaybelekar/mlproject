@@ -13,7 +13,7 @@ This project is a machine learning project made to detect heart disease from a s
 * Data Preprocessing
 * Data Transformation
 * Model Building
-* Hyper Tuning
+* Hyperparameter Tuning
 * Flask App Creation
 
 ***
