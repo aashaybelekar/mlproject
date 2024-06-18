@@ -5,9 +5,7 @@ import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from src.pipeline.predict_pipeline import CustomData, PredictPipline
 
-application = Flask(__name__)
-
-app = application
+app = Flask(__name__)
 
 ## Route for a home page
 
@@ -32,7 +30,6 @@ def predict_datapoint():
             ST_Slope = request.form.get('st_segment_slope')
         )
         pred_df = data.get_data_as_data_frame()
-        print(pred_df)
 
         predict_pipline = PredictPipline()
         results = predict_pipline.predict(pred_df)
