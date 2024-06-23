@@ -62,7 +62,9 @@ jobs:
           secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           region: ${{ secrets.AWS_ECR_REGION }}
       
-      
+      - name: Setup docker creds
+        run: |
+        docker login --username AWS --password-stdin ${{secrets.AWS_ECR_LOGIN_URI}}
       - name: Pull latest images
         run: |
          docker pull ${{secrets.AWS_ECR_LOGIN_URI}}/${{ secrets.ECR_REPOSITORY_NAME }}:latest
