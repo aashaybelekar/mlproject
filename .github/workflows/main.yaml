@@ -28,26 +28,24 @@ jobs:
 
   build-and-push-ecr-image:
     name: Publish Docker
-    needs: integration
-    jobs:
-      build:
-        runs-on: ubuntu-latest
-        steps:
-        - uses: actions/checkout@v3
-        - name: Login to ECR
-          id: ecr
-          uses: elgohr/ecr-login-action@v3
-          with:
-            access_key: ${{ secrets.AWS_ACCESS_KEY }}
-            secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            region: ${{ secrets.AWS_ECR_REGION }}
-        - name: Publish to Registry
-          uses: elgohr/Publish-Docker-Github-Action@v5
-          with:
-            name: myDocker/repository
-            username: ${{ steps.ecr.outputs.username }}
-            password: ${{ steps.ecr.outputs.password }}
-            registry: ${{ steps.ecr.outputs.registry }}         
+    build:
+      runs-on: ubuntu-latest
+      steps:
+      - uses: actions/checkout@v3
+      - name: Login to ECR
+        id: ecr
+        uses: elgohr/ecr-login-action@v3
+        with:
+          access_key: ${{ secrets.AWS_ACCESS_KEY }}
+          secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          region: ${{ secrets.AWS_ECR_REGION }}
+      - name: Publish to Registry
+        uses: elgohr/Publish-Docker-Github-Action@v5
+        with:
+          name: myDocker/repository
+          username: ${{ steps.ecr.outputs.username }}
+          password: ${{ steps.ecr.outputs.password }}
+          registry: ${{ steps.ecr.outputs.registry }}         
           
   Continuous-Deployment:
     needs: build-and-push-ecr-image
