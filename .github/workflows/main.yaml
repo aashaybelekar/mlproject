@@ -27,41 +27,27 @@ jobs:
         run: echo "Running unit tests"
 
   build-and-push-ecr-image:
-    name: Continuous Delivery
+    name: Publish Docker
     needs: integration
-    runs-on: self-hosted
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
-
-      - name: Install Utilities
-        run: |
-          sudo yum check-update
-          sudo yum install -y jq unzip
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
-
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
-
-      - name: Build, tag, and push image to Amazon ECR
-        id: build-image
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY_NAME }}
-          IMAGE_TAG: latest
-        run: |
-          # Build a docker container and
-          # push it to ECR so that it can
-          # be deployed to ECS.
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"          
+    jobs:
+      build:
+        runs-on: ubuntu-latest
+        steps:
+        - uses: actions/checkout@v3
+        - name: Login to ECR
+          id: ecr
+          uses: elgohr/ecr-login-action@v3
+          with:
+            access_key: ${{ secrets.AWS_ACCESS_KEY }}
+            secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            region: ${{ secrets.AWS_ECR_REGION }}
+        - name: Publish to Registry
+          uses: elgohr/Publish-Docker-Github-Action@v5
+          with:
+            name: myDocker/repository
+            username: ${{ steps.ecr.outputs.username }}
+            password: ${{ steps.ecr.outputs.password }}
+            registry: ${{ steps.ecr.outputs.registry }}         
           
   Continuous-Deployment:
     needs: build-and-push-ecr-image
@@ -75,7 +61,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          aws-region: ${{ secrets.AWS_EC2_REGION }}
 
       - name: Login to Amazon ECR
         id: login-ecr
