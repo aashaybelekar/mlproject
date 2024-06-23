@@ -68,6 +68,12 @@ jobs:
           ECR_REPOSITORY_NAME: ${{ secrets.ECR_REPOSITORY_NAME }}
           IMAGE_ID: latest
         run: docker pull $AWS_ECR_LOGIN_URI/$ECR_REPOSITORY_NAME:$IMAGE_ID
+
+      - name: Stopping old running containers
+        run: docker stop $(docker ps -a -q)
+      
+      -name: Removing old containers
+        run: docker rm $(docker ps -a -q)
        
       - name: Run Docker Image to serve users
         run: |
