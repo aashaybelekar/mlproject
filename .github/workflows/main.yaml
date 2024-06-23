@@ -72,7 +72,7 @@ jobs:
       - name: Stopping old running containers
         run: docker stop $(docker ps -a -q)
       
-      -name: Removing old containers
+      - name: Removing old containers
         run: docker rm $(docker ps -a -q)
        
       - name: Run Docker Image to serve users
