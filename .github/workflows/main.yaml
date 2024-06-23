@@ -30,8 +30,8 @@ jobs:
     runs-on: self-hosted
     needs: integration
     steps:
+    - uses: actions/checkout@v3
     - name: Login to ECR
-      uses: actions/checkout@v3
       id: ecr
       uses: elgohr/ecr-login-action@v3
       with:
