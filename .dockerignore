@@ -4,5 +4,6 @@ images/
 mlproject.egg-info/
 venv/
 notebook/
+rawdata/
 research/
 README.md
