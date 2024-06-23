@@ -27,11 +27,11 @@ jobs:
         run: echo "Running unit tests"
 
   build-and-push-ecr-image:
-  build:
     runs-on: self-hosted
+    needs: integration
     steps:
-    - uses: actions/checkout@v3
     - name: Login to ECR
+    - uses: actions/checkout@v3
       id: ecr
       uses: elgohr/ecr-login-action@v3
       with:
@@ -41,10 +41,11 @@ jobs:
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@v5
       with:
-        name: myDocker/repository
+        name: ${{ secrets.IMAGE_NAME }}
         username: ${{ steps.ecr.outputs.username }}
         password: ${{ steps.ecr.outputs.password }}
-        registry: ${{ steps.ecr.outputs.registry }}  
+        registry: ${{ steps.ecr.outputs.registry }}
+    
           
   Continuous-Deployment:
     needs: build-and-push-ecr-image
@@ -71,7 +72,7 @@ jobs:
        
       - name: Run Docker Image to serve users
         run: |
-         docker run -d -p 5000:5000 --ipc="host" --name=mltest -e 'AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}' -e 'AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}' -e 'AWS_REGION=${{ secrets.AWS_REGION }}'  ${{secrets.AWS_ECR_LOGIN_URI}}/${{ secrets.ECR_REPOSITORY_NAME }}:latest
+         docker run -d -p 5000:5000 --ipc="host" --name=mltest -e 'AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}' -e 'AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}' -e 'AWS_REGION=${{ secrets.AWS_EC2_REGION }}'  ${{secrets.AWS_ECR_LOGIN_URI}}/${{ secrets.ECR_REPOSITORY_NAME }}:latest
       - name: Clean previous images and containers
         run: |
          docker system prune -f
