@@ -18,6 +18,15 @@ This project is a machine learning project made to detect heart disease from a s
 * Deployment
 
 ***
+## Table of Contents
+- [Video Demo](#video-demo)
+- [User Interface](#user-interface)
+- [User Intructions](#user-intructions)
+
+
+## Video Demo
+[![Watch the video](https://raw.githubusercontent.com/aashaybelekar/HeartDiseasePrediction/main/images/VideoThumb.png)](https://youtu.be/9f9krzL4piA)
+
 
 ## User Interface
 
